@@ -1,0 +1,35 @@
+name: Create clean HW3 branch
+
+on:
+  push:
+    branches:
+      - hw3-monitoring
+    paths:
+      - .github/workflows/hw3-clean-branch.yml
+
+permissions:
+  contents: write
+
+jobs:
+  create-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create branch from upstream main
+        run: |
+          cp -a hw3 /tmp/hw3
+          git remote add upstream https://github.com/L1mple/python-backend-2026.git
+          git fetch upstream main
+          git switch --force-create hw3-only upstream/main
+          rm -rf hw3
+          cp -a /tmp/hw3 ./hw3
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add hw3
+          git commit -m "Add Docker monitoring for Shop API"
+          git push --set-upstream origin hw3-only
