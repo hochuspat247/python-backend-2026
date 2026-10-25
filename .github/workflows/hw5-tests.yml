@@ -7,7 +7,7 @@ on:
       - "hw5/**"
       - ".github/workflows/hw5-tests.yml"
   push:
-    branches: [main, hw5-testing-ci]
+    branches: [main]
     paths:
       - "hw5/**"
       - ".github/workflows/hw5-tests.yml"
